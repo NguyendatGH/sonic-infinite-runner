@@ -44,3 +44,4 @@ This is a simple running game inspired by SEGA's Sonic games. The game is built 
 ## Inspiration
 
     link youtube of this project, here u can learn more about kaplay.js
+    https://www.youtube.com/watch?v=EmMO0yQ7eeY&t=3283s
