@@ -2,6 +2,7 @@ import k from "../kaplayCtx";
 import { makeSonic } from "../entities/sonic";
 import { makeRing } from "../entities/ring";
 import { makeMotoBug } from "../entities/motobug";
+import { makeHeart } from "../entities/heart";
 
 export default function game() {
   const citySfx = k.play("city", { volume: 0.2, loop: true });
@@ -27,7 +28,6 @@ export default function game() {
   sonicObj.setControls();
   sonicObj.setEvents();
 
-
   const controlsText = k.add([
     k.text("Press Space/Click/Touch to Jump!", {
       font: "mania",
@@ -40,6 +40,13 @@ export default function game() {
   const dismissControlsAction = k.onButtonPress("jump", () => {
     k.destroy(controlsText), dismissControlsAction.cancel();
   });
+
+  let hearts = 3;
+  let heartUI = [];
+
+  for (let i = 0; i < hearts; i++) {
+    heartUI.push(makeHeart(k.vec2(k.width() - 60 * (i + 1), 60)));
+  }
 
   const scoreText = k.add([
     k.text("SCORE: 0", { font: "mania", size: 72 }),
@@ -84,8 +91,27 @@ export default function game() {
       return;
     }
     k.play("hurt", { volume: 0.5 });
-    k.setData("current-score", score);
-    k.go("gameover", citySfx);
+
+    sonicObj.opacity = 0.3; 
+    let blinkCount = 0;
+    const blinkTotal = 10; 
+    const blinkInterval = 0.2; 
+    const blinkedEff = k.loop(blinkInterval, () => {
+      sonicObj.opacity = sonicObj.opacity === 1 ? 0.3 : 1; 
+      blinkCount++;
+      if (blinkCount >= blinkTotal) {
+        blinkedEff.cancel();
+        sonicObj.opacity = 1;
+      }
+    });
+    
+    if (hearts > 1) {
+      hearts--;
+      k.destroy(heartUI.pop());
+    } else {
+      k.setData("current-score", score);
+      k.go("gameover", citySfx);
+    }
   });
 
   let gameSpeed = 300;
@@ -136,8 +162,6 @@ export default function game() {
     k.body({ isStatic: true }),
     "platform",
   ]);
-
-
 
   k.onUpdate(() => {
     if (sonicObj.isGrounded()) scoreMultipler = 0;

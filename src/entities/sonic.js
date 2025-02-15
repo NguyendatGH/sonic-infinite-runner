@@ -10,6 +10,7 @@ export function makeSonic(pos) {
     k.body({ jumpForce: 1700 }),
     {
       ringCollectUI: null,
+
       setControls() {
         k.onButtonPress("jump", () => {
           if (this.isGrounded()) {

@@ -32,6 +32,11 @@ k.loadSprite("motobug", "graphics/motobug.png", {
   },
 });
 
+k.loadSprite("heart", "graphics/Heart.png", {
+  sliceX: 2.6,
+  sliceY: 1,
+});
+
 k.loadFont("mania", "fonts/mania.ttf");
 k.loadSound("destroy", "sounds/Destroy.wav");
 k.loadSound("hurt", "sounds/Hurt.wav");
@@ -39,7 +44,6 @@ k.loadSound("hyper-ring", "sounds/HyperRing.wav");
 k.loadSound("jump", "sounds/Jump.wav");
 k.loadSound("ring", "sounds/Ring.wav");
 k.loadSound("city", "sounds/city.mp3");
-
 
 k.scene("disclaimer", disclaimer);
 k.scene("main-menu", mainMenu);
